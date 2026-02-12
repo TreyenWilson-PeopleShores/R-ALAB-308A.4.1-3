@@ -22,6 +22,8 @@ const API_KEY =
  *  - Each option should display text equal to the name of the breed.
  * This function should execute immediately.
  */
+let breedSelection = document.getElementById("breedSelect");
+breedSelection.appendChild(document.createElement("Test"))
 async function initialLoad() {
   let test = await fetch("https://api.thecatapi.com/v1/breeds/beng", {
     headers: {
