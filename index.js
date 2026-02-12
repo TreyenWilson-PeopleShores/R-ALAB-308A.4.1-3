@@ -23,7 +23,8 @@ const API_KEY =
  * This function should execute immediately.
  */
 let breedSelection = document.getElementById("breedSelect");
-//breedSelection.appendChild(document.createElement("Test"))
+let test = document.createElement("option");
+breedSelection.appendChild(test);
 async function initialLoad() {
   let beng = await fetch("https://api.thecatapi.com/v1/breeds/beng", {
     headers: {
@@ -45,7 +46,7 @@ let awir = await fetch("https://api.thecatapi.com/v1/breeds/beng", {
   console.log(awir, beng, abys);
 }
 
-
+initialLoad();
 
 /**
  * 2. Create an event handler for breedSelect that does the following:
