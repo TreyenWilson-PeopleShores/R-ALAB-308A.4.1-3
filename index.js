@@ -23,16 +23,29 @@ const API_KEY =
  * This function should execute immediately.
  */
 let breedSelection = document.getElementById("breedSelect");
-breedSelection.appendChild(document.createElement("Test"))
+//breedSelection.appendChild(document.createElement("Test"))
 async function initialLoad() {
-  let test = await fetch("https://api.thecatapi.com/v1/breeds/beng", {
+  let beng = await fetch("https://api.thecatapi.com/v1/breeds/beng", {
     headers: {
       "x-api-key": API_KEY,
     },
   });
-  console.log(test);
+  let abys = await fetch("https://api.thecatapi.com/v1/breeds/abys", {
+    headers: {
+      "x-api-key": API_KEY,
+    },
+  });
+  console.log(abys);
+
+let awir = await fetch("https://api.thecatapi.com/v1/breeds/beng", {
+    headers: {
+      "x-api-key": API_KEY,
+    },
+  });
+  console.log(awir, beng, abys);
 }
-initialLoad();
+
+
 
 /**
  * 2. Create an event handler for breedSelect that does the following:
