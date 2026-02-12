@@ -23,7 +23,11 @@ const API_KEY =
  * This function should execute immediately.
  */
 async function initialLoad() {
-  let test = await fetch(API_KEY);
+  let test = await fetch("https://api.thecatapi.com/v1/breeds/beng", {
+    headers: {
+      "x-api-key": API_KEY,
+    },
+  });
   console.log(test);
 }
 initialLoad();
