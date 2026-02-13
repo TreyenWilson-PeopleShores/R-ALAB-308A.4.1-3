@@ -53,7 +53,7 @@ for (let breed = 0; breed<allBreeds.length; breed++){
   options.value = breeds.id;
   breedSelection.appendChild(options)
 }) */
-console.log(options)
+//console.log(options)
 }
 
 initialLoad();
