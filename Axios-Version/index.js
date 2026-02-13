@@ -14,6 +14,9 @@ const getFavouritesBtn = document.getElementById("getFavouritesBtn");
 const API_KEY =
   "live_VOZbbd602q8H85w6A0laOJiAuJk7unXGEE8KYq3i9HNimRuFc7xzkIxA5sAOE71";
 
+axios.defaults.headers.common["x-api-key"] = API_KEY;
+axios.defaults.baseURL = "https://api.thecatapi.com/v1";
+
 /**
  * 1. Create an async function "initialLoad" that does the following:
  * - Retrieve a list of breeds from the cat API using fetch().
@@ -29,12 +32,10 @@ let options = document.createElement("option");
 //breedSelection.appendChild(options);
 
 async function initialLoad() {
-  let response = await fetch("https://api.thecatapi.com/v1/breeds", {
-    headers: {
-      "x-api-key": API_KEY,
-    },
-  });
-  let breeds = await response.json()
+
+  let response = await axios.get("/breeds");
+  let breeds =  response.data;
+
   let allBreeds = breeds; // This is so we don't have to call the API so many times
 
 //breeds
@@ -53,22 +54,19 @@ async function initialLoad() {
 
 initialLoad(); // runs the Breed selection
 async function initalImage(){
-  let selectedBreedId = breedSelection.value;
-  let response = await fetch("https://api.thecatapi.com/v1/breeds", {
-    headers: {
-      "x-api-key": API_KEY,
-    },
-  });
-  let breeds = await response.json();
-  let selectedBreed = breeds[0]
 
 
-    let responseImage = await fetch(`https://api.thecatapi.com/v1/images/${selectedBreed.reference_image_id}`, {
-    headers: {
-      "x-api-key": API_KEY,
-    },
-  });
-  let image = await responseImage.json();
+  let response = await axios.get("/breeds");
+  let breeds =  response.data;
+
+
+
+ 
+  //let breeds = await response.json();
+  let selectedBreed = breeds[1]
+  let responseImage = await axios.get(`/images/${selectedBreed.reference_image_id}`);
+  let image =  responseImage.data;
+
   let imageUrl = image.url;
     //Carousel.createCarouselItem(selectedBreed.reference_image_id, selectedBreed.name, selectedBreed.id);
     Carousel.clear();
@@ -98,12 +96,10 @@ initalImage()
 
 breedSelection.addEventListener("change", async function(){
   let selectedBreedId = breedSelection.value;
-  let response = await fetch("https://api.thecatapi.com/v1/breeds", {
-    headers: {
-      "x-api-key": API_KEY,
-    },
-  });
-  let breeds = await response.json();
+
+  let response = await axios.get("/breeds");
+  let breeds =  response.data;
+
   let selectedBreed;
   for (let breed of breeds){
     breed.id
@@ -114,12 +110,8 @@ breedSelection.addEventListener("change", async function(){
     
   }
 
-    let responseImage = await fetch(`https://api.thecatapi.com/v1/images/${selectedBreed.reference_image_id}`, {
-    headers: {
-      "x-api-key": API_KEY,
-    },
-  });
-  let image = await responseImage.json();
+  let responseImage = await axios.get(`/images/${selectedBreed.reference_image_id}`);
+  let image =  responseImage.data;
   let imageUrl = image.url;
     //Carousel.createCarouselItem(selectedBreed.reference_image_id, selectedBreed.name, selectedBreed.id);
     Carousel.clear();
@@ -142,6 +134,9 @@ breedSelection.addEventListener("change", async function(){
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
+
+
+
 /**
  * 5. Add axios interceptors to log the time between request and response to the console.
  * - Hint: you already have access to code that does this!
