@@ -76,7 +76,7 @@ breedSelection.addEventListener("change", async function(){
     headers: {
       "x-api-key": API_KEY,
     },
-  });;
+  });
   let breeds = await response.json();
   let selectedBreed;
   for (let breed of breeds){
@@ -87,7 +87,20 @@ breedSelection.addEventListener("change", async function(){
     }
     
   }
-    console.log(selectedBreed);
+
+    let responseImage = await fetch(`https://api.thecatapi.com/v1/images/${selectedBreed.reference_image_id}`, {
+    headers: {
+      "x-api-key": API_KEY,
+    },
+  });
+  let image = await responseImage.json();
+  let imageUrl = image.url;
+    //Carousel.createCarouselItem(selectedBreed.reference_image_id, selectedBreed.name, selectedBreed.id);
+    Carousel.appendCarousel(Carousel.createCarouselItem(imageUrl, selectedBreed.name, selectedBreed.id));
+    Carousel.start();
+    document.getElementById("infoDump").innerHTML += `<h4> ${selectedBreed.name}</h4><p><b> Grooming:</b> ${selectedBreed.grooming}</p><p> <b>Temperament:</b> ${selectedBreed.temperament}</p><p> <b>Health Issues:</b> ${selectedBreed.health_issues}</p><p><b> Life Span: </b>${selectedBreed.life_span}</p>`;
+   console.log(selectedBreed);
+
 })
 
 /**
